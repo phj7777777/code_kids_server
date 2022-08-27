@@ -10,7 +10,7 @@ mongoose.connect(
   (err) => {
     if (err) console.log('Error', err);
     else console.log('Mongodb connected');
-  }
+  },
 );
 
 module.exports = mongoose;

@@ -29,7 +29,7 @@ module.exports.signUp = async (res, parameters) => {
       const token = jwt.sign(
         { email, id: savedUser.id, username },
         config.API_KEY_JWT,
-        { expiresIn: config.TOKEN_EXPIRES_IN }
+        { expiresIn: config.TOKEN_EXPIRES_IN },
       );
 
       return res.status(201).json({ token });
