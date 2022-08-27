@@ -11,7 +11,7 @@ router.post(
   validateSchemas.inputs(schemas.signUp, 'body'),
   (req, res) => {
     controller.signUp(res, req.body);
-  }
+  },
 );
 
 module.exports = router;

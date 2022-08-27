@@ -20,7 +20,7 @@ const User = mongoose.model(
       required: true,
     },
   },
-  'users'
+  'users',
 );
 
 module.exports = {
