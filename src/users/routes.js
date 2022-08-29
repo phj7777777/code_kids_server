@@ -7,7 +7,7 @@ const schemas = require('./utils/schemasValidation');
 const router = express.Router();
 
 router.post(
-  '/api/v1/signup',
+  `${API_PREFIX}/signup`,
   validateSchemas.inputs(schemas.signUp, 'body'),
   (req, res) => {
     controller.signUp(res, req.body);
