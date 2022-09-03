@@ -1,31 +1,33 @@
-const axios = require('axios').default;
+const axios = require('axios');
 const { error, info } = require('log');
 
 // POST HTTP request
-module.exports.postHttp = async (url, res, data = {}, headers = {}) => {
+module.exports.postHttp = async (url, data = {}, headers = {}) => {
   axios.post(url, data, { headers: headers })
     .then(function(response) {
       info(response);
-      res.send({ result: 'ok', message: response.data });
+      console.log(response)
+      return { status: response.status, result: 'ok', message: response.data };
     })
     .catch(function(err) {
       error(err);
-      res.send({ result: 'error', message: err });
+      console.log(err)
+      return { status: err.status, result: 'error', message: 'error_server' };
     });
 };
 
 // GET HTTP request
-module.exports.getHttp = async (url, res, params = {}) => {
+module.exports.getHttp = async (url, params = {}) => {
   axios.get(url, {
     params: params,
   })
     .then(function(response) {
       info(response);
-      res.send({ result: 'ok', message: response.data });
+      return { result: 'ok', message: response.data };
     })
     .catch(function(err) {
       error(err);
-      res.send({ result: 'error', message: err });
+      return { result: 'error', message: 'error_server' };
     });
 };
 
