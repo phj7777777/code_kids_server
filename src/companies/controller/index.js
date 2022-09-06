@@ -42,6 +42,7 @@ module.exports.getCompany = async (id) => {
 
 module.exports.updateCompany = async (id, company) => {
 
+  const currentTime = new Date();
   const {
     name,
     description,
@@ -55,8 +56,8 @@ module.exports.updateCompany = async (id, company) => {
     url,
   } = company;
   const response = await db.query(
-    'UPDATE companies SET name = COALESCE($1,name), description = COALESCE($2,description), email= COALESCE($3,email), booking_policy= COALESCE($4,booking_policy), address= COALESCE($5,address), country= COALESCE($6,country), phone_number= COALESCE($7,phone_number), country_code= COALESCE($8,country_code), profile_image= COALESCE($9,profile_image), url= COALESCE($10,url) WHERE id = $11',
-    [name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, id],
+    'UPDATE companies SET name = COALESCE($1,name), description = COALESCE($2,description), email= COALESCE($3,email), booking_policy= COALESCE($4,booking_policy), address= COALESCE($5,address), country= COALESCE($6,country), phone_number= COALESCE($7,phone_number), country_code= COALESCE($8,country_code), profile_image= COALESCE($9,profile_image), url= COALESCE($10,url), last_update_time= $11, WHERE id = $12',
+    [name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url,currentTime, id],
   );
 
   if (response) {
