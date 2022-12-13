@@ -16,8 +16,8 @@ module.exports.createCustomer = async (customer) => {
     profile_image,
   } = customer;
   const { rows } = await db.query(
-    'INSERT INTO customers (name, age, address,email, country, phone_number, country_code,profile_image, last_update_time, created_time) VALUES ($1, $2, $3, $4,$5,$6,$7,$8, $9, $9)',
-    [name, age, address, email, country, phone_number, country_code, profile_image, currentTime],
+    'INSERT INTO customers (name,address,email, country, phone_number, country_code,profile_image, last_update_time, created_time) VALUES ($1, $2, $3, $4,$5,$6,$7,$8, $9)',
+    [name,  address, email, country, phone_number, country_code, profile_image, currentTime],
   );
 
   if (rows) {
@@ -28,7 +28,7 @@ module.exports.createCustomer = async (customer) => {
 
 module.exports.getCustomer = async (id) => {
   const response = await db.query(
-    'SELECT * FROM customers WHERE id = $1 LIMIT 1',
+    'SELECT * FROM customers WHERE cud = $1 LIMIT 1',
     [id],
   );
 

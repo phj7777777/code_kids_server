@@ -4,7 +4,8 @@
   "description": "Scalable and basic template for making Node.js apps by using express",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
+    "dev": "nodemon index.js ",
+    "doc": "node swagger.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier-eslint \"$PWD/{,!(node_modules)/**/}*.{js,json}\"",
@@ -33,7 +34,9 @@
     "log": "^6.3.1",
     "mongoose": "^5.9.15",
     "nodemailer": "^6.7.8",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "swagger-autogen": "^2.22.0",
+    "swagger-ui-express": "^4.6.0"
   },
   "devDependencies": {
     "@types/node": "^18.7.13",

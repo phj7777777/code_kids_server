@@ -10,6 +10,14 @@ router.post('/', async (req, res) => {
   return res.status(400).json({ result: 'error_server' });
 });
 
+router.get('/', async (req, res) => {
+
+  const result = await controller.getCustomer(id);
+  if (result) return res.status(parseInt(result.status)).json({ result: result.message });
+  return res.status(400).json({ result: 'error_server' });
+});
+
+
 router.get('/:id', async (req, res) => {
 
   const id = req.params.id;

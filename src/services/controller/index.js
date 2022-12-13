@@ -39,12 +39,15 @@ module.exports.updateService = async (id, service) => {
     name,
     description,
     lowest_price,
+    cover_image,
+    images,
     currency,
+    company_id,
   } = service;
 
   const response = await db.query(
-    'UPDATE services SET name = COALESCE($1,name), description = COALESCE($2,description), lowest_price= COALESCE($3,lowest_price), currency= COALESCE($4,currency), last_update_time = $5  WHERE id = $6',
-    [name, description, lowest_price, currency, currentTime, id],
+    'UPDATE services SET name = COALESCE($1,name), description = COALESCE($2,description), lowest_price= COALESCE($3,lowest_price),cover_image =COALESCE($4,cover_image), images = array_append(images, $5)  currency= COALESCE($6,currency), company_id = COALESCE($7,company_id), last_update_time = $8  WHERE id = $9',
+    [name, description, lowest_price, cover_image, images, currency, company_id, currentTime, id],
   );
 
   if (response) {

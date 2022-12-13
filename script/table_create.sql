@@ -25,7 +25,8 @@ CREATE TABLE IF NOT EXISTS  services (
   	lowest_price decimal,
   	currency VARCHAR (10),
   	last_update_time TIMESTAMP,
-  	created_time TIMESTAMP NOT NULL
+  	created_time TIMESTAMP NOT NULL,
+  	company_id serial NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS packages (
@@ -47,11 +48,12 @@ CREATE TABLE IF NOT EXISTS service_package (
 );
 
 
-CREATE TABLE IF NOT EXISTS customer (
+CREATE TABLE IF NOT EXISTS customers (
  	id serial UNIQUE PRIMARY KEY,
  	name VARCHAR ( 255 )  NOT NULL,
  	email VARCHAR ( 255 ) UNIQUE NOT NULL,
  	dob DATE,
+ 	title VARCHAR (255),
  	booking_policy TEXT,
  	last_update_time TIMESTAMP,
  	last_login TIMESTAMP,
@@ -61,18 +63,26 @@ CREATE TABLE IF NOT EXISTS customer (
  	phone_number VARCHAR (20),
  	country_code VARCHAR(4),
  	profile_image TEXT,
-    description TEXT,
- 	url TEXT
+    description TEXT
+);
+
+CREATE TABLE IF NOT EXISTS staffs (
+    id serial UNIQUE PRIMARY KEY,
+ 	name VARCHAR ( 255 )  NOT NULL,
+ 	email VARCHAR ( 255 ) UNIQUE NOT NULL,
+ 	profile_image TEXT,
+ 	dob DATE,
+ 	position VARCHAR ( 255 ),
+ 	phone_number VARCHAR (20),
+ 	country_code VARCHAR(4),
+    created_time TIMESTAMP NOT NULL,
+    last_update_time TIMESTAMP
 );
 
 
-CREATE TABLE IF NOT EXISTS employee (
-    id serial UNIQUE PRIMARY KEY,
- 	name VARCHAR ( 255 )  NOT NULL,
- 	profile_image TEXT,
- 	position VARCHAR ( 255 ),
-    created_time TIMESTAMP NOT NULL,
-    last_update_time TIMESTAMP
+CREATE TABLE IF NOT EXISTS companies_staffs (
+    company_id INTEGER,
+    staff_id INTEGER
 );
 
 
