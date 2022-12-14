@@ -9,16 +9,21 @@ module.exports.createStaff = async (staff) => {
     const currentTime = new Date();
     const {
       name,
+      email,
+      phone_number,
+      country_code,
       profile_image,
       position,
+      dob,
     } = staff;
     const { rows } = await db.query(
-      'INSERT INTO staffs (name, profile_image, position, last_update_time, created_time) VALUES ($1, $2, $3, $4,$4)',
-      [name, profile_image, position, currentTime],
+      'INSERT INTO staffs (name, email, phone_number, country_code, profile_image, position,dob,  last_update_time, created_time) VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$8)',
+      [name, email, phone_number, country_code, profile_image, position,dob, currentTime],
     );
 
     return { status: '200', result: 'ok', data: rows };
   } catch (e) {
+
     return { status: '400', result: '', data: e.toString() };
   }
 

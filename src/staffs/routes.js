@@ -4,6 +4,8 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
+  console.log(req.body)
+
   const result = await controller.createStaff(req.body);
   if (result.status == '200') return res.status(parseInt(result.status)).json({ result: result.result });
   return res.status(400).json({ result: 'error_server' });
