@@ -4,16 +4,15 @@ const controller = require('./controller/index');
 const router = express.Router();
 
 
-router.post('/', async (req, res) => {
-  const result = await controller.createCustomer(req.body);
-  if (result) return res.status(parseInt(result.status)).json({ result: result.result });
+router.get('/', async (req, res) => {
+  const result = await controller.getAllCustomer();
+  if (result) return res.status(parseInt(result.status)).json({ data: result.data });
   return res.status(400).json({ result: 'error_server' });
 });
 
-router.get('/', async (req, res) => {
-
-  const result = await controller.getCustomer(id);
-  if (result) return res.status(parseInt(result.status)).json({ result: result.message });
+router.post('/', async (req, res) => {
+  const result = await controller.createCustomer(req.body);
+  if (result) return res.status(parseInt(result.status)).json({ result: result.result });
   return res.status(400).json({ result: 'error_server' });
 });
 
