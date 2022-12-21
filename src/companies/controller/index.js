@@ -3,28 +3,37 @@ const db = require('../../../services/database');
 
 
 module.exports.createCompany = async (company) => {
+console.log(company)
+  try{
+    const currentTime = new Date();
+    const {
+      organization_name,
+      description,
+      email,
+      booking_policy,
+      address,
+      country,
+      phone_number,
+      country_code,
+      profile_image,
+      url,
+    } = company;
 
-  const currentTime = new Date();
-  const {
-    name,
-    description,
-    email,
-    booking_policy,
-    address,
-    country,
-    phone_number,
-    country_code,
-    profile_image,
-    url,
-  } = company;
-  const { rows } = await db.query(
-    'INSERT INTO companies (name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, last_update_time, created_time) VALUES ($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11, $11)',
-    [name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, currentTime],
-  );
+    const { rows } = await db.query(
+      'INSERT INTO companies (organization_name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, last_update_time, created_time) VALUES ($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11, $11)',
+      [organization_name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, currentTime],
+    );
 
-  if (rows) {
-    return { status: '200', result: 'ok', message: rows };
+    if (rows) {
+      return { status: '200', result: 'ok', message: rows };
+    }
+
+
+  }catch (e) {
+
+    return { status: '400', result: 'failed', message: e };
   }
+
 
 };
 

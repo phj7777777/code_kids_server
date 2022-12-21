@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS  companies (
  	id serial UNIQUE PRIMARY KEY,
- 	name VARCHAR ( 255 )  NOT NULL,
+ 	organization_name VARCHAR ( 255 )  NOT NULL,
     description TEXT,
  	email VARCHAR ( 255 ) UNIQUE NOT NULL,
  	booking_policy TEXT,
@@ -11,6 +11,8 @@ CREATE TABLE IF NOT EXISTS  companies (
  	country VARCHAR (255),
  	phone_number VARCHAR (20),
  	country_code VARCHAR(4),
+ 	industry VARCHAR(255),
+ 	country VARCHAR(255),
  	profile_image TEXT,
  	url TEXT
  );
@@ -39,6 +41,7 @@ CREATE TABLE IF NOT EXISTS packages (
    	last_update_time TIMESTAMP,
    	created_time TIMESTAMP NOT NULL
 );
+
 
 
 CREATE TABLE IF NOT EXISTS service_package (

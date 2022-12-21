@@ -5,8 +5,9 @@ const router = express.Router();
 
 
 router.post('/', async (req, res) => {
+  console.log('hii')
   const result = await controller.createCompany(req.body);
-  if (result) return res.status(parseInt(result.status)).json({ result: result.result });
+  if (result.status == '400') return res.status(parseInt(result.status)).json({ result: result.result });
   return res.status(400).json({ result: 'error_server' });
 });
 
@@ -19,6 +20,7 @@ router.get('/:id', async (req, res) => {
   if (result) return res.status(parseInt(result.status)).json({ result: result.message });
   return res.status(400).json({ result: 'error_server' });
 });
+
 
 router.put('/:id', async (req, res) => {
   const id = req.params.id;
