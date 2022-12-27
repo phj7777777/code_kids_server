@@ -5,6 +5,7 @@ const booking = require('../src/bookings/routes');
 const customer = require('../src/customers/routes');
 const staff = require('../src/staffs/routes');
 const package = require('../src/packages/routes');
+const image = require('../src/images/routes');
 const service = require('../src/services/routes');
 const { API_PREFIX } = require('../const');
 const swaggerUi = require('swagger-ui-express');
@@ -19,6 +20,7 @@ module.exports = (app) => {
   //app.use(`${API_PREFIX}//users`, validateAuth.checkIfAuthenticated, getData.getGeoip, users);
   app.use(`${API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(`${API_PREFIX}/status`, validateAuth.checkIfAuthenticated, getData.getGeoip, status);
+  app.use(`${API_PREFIX}/image`, validateAuth.checkIfAuthenticated, getData.getGeoip, image);
   app.use(`${API_PREFIX}/message`, validateAuth.checkIfAuthenticated, getData.getGeoip, message);
   app.use(`${API_PREFIX}/company`, validateAuth.checkIfAuthenticated, getData.getGeoip, company);
   app.use(`${API_PREFIX}/booking`, validateAuth.checkIfAuthenticated, getData.getGeoip, booking);

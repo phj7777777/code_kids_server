@@ -13,6 +13,7 @@ module.exports.createCustomerQuery = async (customer) => {
     profile_image,
   } = customer;
 
+
   return await db.query(
     'INSERT INTO customers (name,address,email, country, phone_number, country_code,profile_image, last_update_time, created_time) VALUES ($1, $2, $3, $4,$5,$6,$7,$8, $8)',
     [name, address, email, country, phone_number, country_code, profile_image, currentTime],

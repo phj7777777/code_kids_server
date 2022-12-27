@@ -1,89 +1,82 @@
-const { error, info } = require('log');
-const db = require('../../../services/database');
-const { i } = require('log/lib/printf-modifiers');
-
+const { ERROR_PARAM, ERROR_SERVER, SUCCESS, ERROR_EMPTY, STATUS_SUCCESS_200 } = require('../../../const');
+const { getStaffQuery, getAllStaffQuery, createStaffQuery, updateStaffQuery, deleteStaffQuery } = require('../../../models/staff_model');
+const logger = require('../../../logger');
 
 module.exports.createStaff = async (staff) => {
-
   try {
-    const currentTime = new Date();
-    const {
-      name,
-      email,
-      phone_number,
-      country_code,
-      profile_image,
-      position,
-      dob,
-    } = staff;
-    const { rows } = await db.query(
-      'INSERT INTO staffs (name, email, phone_number, country_code, profile_image, position,dob,  last_update_time, created_time) VALUES ($1, $2, $3, $4,$5,$6,$7,$8,$8)',
-      [name, email, phone_number, country_code, profile_image, position,dob, currentTime],
-    );
-
-    return { status: '200', result: 'ok', data: rows };
+    if (!staff.name || !staff.email) {
+      logger.error('create_staff|error_param|%s', staff)
+      return { result: ERROR_PARAM, message: '' };
+    }
+    const response = await createStaffQuery(staff);
+    return { result: SUCCESS, message: response };
   } catch (e) {
-
-    return { status: '400', result: '', data: e.toString() };
+    return { result: ERROR_SERVER, message: e.message };
   }
-
 
 };
 
-module.exports.getAllStaff = async (id) => {
-  const response = await db.query(
-    'SELECT * FROM staffs ',
-  );
+module.exports.getAllStaff = async () => {
 
-  if (response?.rows) {
-    return { status: '200', result: 'ok', data: response.rows };
+  try {
+    const response = await getAllStaffQuery();
+    if (!response) {
+      return { result: ERROR_EMPTY, message: '' };
+    }
+    return { result: SUCCESS, message: response.rows };
+
+  } catch (e) {
+    return { result: ERROR_SERVER, message: e.message };
   }
+  
 };
 
 module.exports.getStaff = async (id) => {
-  const response = await db.query(
-    'SELECT * FROM staffs WHERE id = $1 LIMIT 1',
-    [id],
-  );
 
-  if (response?.rows) {
-    return { status: '200', result: 'ok', data: response.rows[0] };
+  try {
+    if (!id) {
+      return { result: ERROR_PARAM, message: '' };
+    }
+    const response = await getStaffQuery(id);
+    if (response?.rows && response?.rows.length > 0) {
+      return { result: SUCCESS, message: response.rows[0] };
+    } else {
+      return { result: ERROR_EMPTY, message: '' };
+    }
+  } catch (e) {
+    return { result: ERROR_SERVER, message: e.message };
   }
+
 };
 
 module.exports.updateStaff = async (id, staff) => {
-  const currentTime = new Date();
-  const {
-    name,
-    email,
-    phone_number,
-    country_code,
-    profile_image,
-    position,
-    dob,
-  } = staff;
 
-  const response = await db.query(
-    'UPDATE staffs SET name = COALESCE($1,name),email = COALESCE($2,email),phone_number =  COALESCE($3,phone_number),country_code = COALESCE($4,country_code), profile_image = COALESCE($5,profile_image), position= COALESCE($6,position), dob= COALESCE($7,dob),last_update_time = $8 WHERE id = $9',
-    [name, email, phone_number, country_code, profile_image, position,dob, currentTime, id],
-  );
-
-
-
-  if (response) {
-    return { status: '200', result: 'ok', data: 'Update successfully' };
+  try {
+    if (!id) {
+      return { result: ERROR_PARAM, message: staff };
+    }
+    if (!staff.name && staff.name !== '') {
+      return { result: ERROR_PARAM, message: staff };
+    }
+    const response = await updateStaffQuery(staff);
+    return { result: SUCCESS, message: response };
+  } catch (e) {
+    return { result: ERROR_SERVER, message: e.message };
   }
 };
 
 
 module.exports.deleteStaff = async (id) => {
-  const response = await db.query(
-    'DELETE FROM staffs WHERE id = $1',
-    [parseInt(id)],
-  );
-  if (response) {
-    return { status: '200', result: 'ok', data: 'Delete successfully' };
+  try {
+    if (!id) {
+      return { result: ERROR_PARAM, message: '' };
+    }
+    const response = await deleteStaffQuery(id);
+    return { result: SUCCESS, message: response };
+  } catch (e) {
+    return { result: ERROR_SERVER, message: e.message };
   }
+
 };
 
 
