@@ -29,10 +29,12 @@ CREATE TABLE IF NOT EXISTS  company_notification (
  	customer_reminder_time VARCHAR(255),
  	staff_book_success VARCHAR(20),
  	staff_book_updated VARCHAR(4),
- 	staff_book_cancelled VARCHAR(255)
+ 	staff_book_cancelled VARCHAR(255),
  	staff_appointment_reminder TIMESTAMP,
- 	staff_reminder_time VARCHAR(255)
- )
+ 	staff_reminder_time VARCHAR(255),
+ 	last_update_time TIMESTAMP
+ );
+
 
 CREATE TABLE IF NOT EXISTS  company_config (
   	id serial UNIQUE PRIMARY KEY,
@@ -49,7 +51,7 @@ CREATE TABLE IF NOT EXISTS  company_config (
   	term_condition_url VARCHAR(255),
   	callback_title VARCHAR(255),
   	callback_url VARCHAR(255)
-)
+);
 
 
 CREATE TABLE IF NOT EXISTS  services (

@@ -1,6 +1,8 @@
 const status = require('../src/health/routes');
 const message = require('../src/messenger/routes');
 const company = require('../src/companies/routes');
+const companyNotification = require('../src/company_notification/routes');
+const companyConfig = require('../src/company_config/routes');
 const booking = require('../src/bookings/routes');
 const customer = require('../src/customers/routes');
 const staff = require('../src/staffs/routes');
@@ -26,6 +28,8 @@ module.exports = (app) => {
   app.use(`${API_PREFIX}/image`, validateAuth.checkIfAuthenticated, getData.getGeoip, image);
   app.use(`${API_PREFIX}/message`, validateAuth.checkIfAuthenticated, getData.getGeoip, message);
   app.use(`${API_PREFIX}/company`, validateAuth.checkIfAuthenticated, getData.getGeoip, company);
+  app.use(`${API_PREFIX}/company-notification`, validateAuth.checkIfAuthenticated, getData.getGeoip, companyNotification);
+  app.use(`${API_PREFIX}/company-config`, validateAuth.checkIfAuthenticated, getData.getGeoip, companyConfig);
   app.use(`${API_PREFIX}/booking`, validateAuth.checkIfAuthenticated, getData.getGeoip, booking);
   app.use(`${API_PREFIX}/customer`, validateAuth.checkIfAuthenticated, getData.getGeoip, customer);
   app.use(`${API_PREFIX}/staff`, validateAuth.checkIfAuthenticated, getData.getGeoip, staff);

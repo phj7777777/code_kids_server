@@ -6,6 +6,7 @@ const path = require('path');
 const wasabiEndpoint = new AWS.Endpoint('https://s3.ap-southeast-1.wasabisys.com');
 
 
+
 const s3Config = new AWS.S3({
   endpoint: wasabiEndpoint,
   accessKeyId: process.env.AWS_IAM_USER_KEY,
