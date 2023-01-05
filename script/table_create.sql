@@ -20,16 +20,36 @@ CREATE TABLE IF NOT EXISTS  companies (
  	url TEXT
  );
 
-CREATE TABLE IF NOT EXISTS  company_booking_policy (
+CREATE TABLE IF NOT EXISTS  company_notification (
  	id serial UNIQUE PRIMARY KEY,
+ 	customer_book_success VARCHAR(255),
+ 	customer_book_updated VARCHAR(255),
+ 	customer_book_cancelled VARCHAR(255),
+ 	customer_appointment_reminder VARCHAR(50),
+ 	customer_reminder_time VARCHAR(255),
+ 	staff_book_success VARCHAR(20),
+ 	staff_book_updated VARCHAR(4),
+ 	staff_book_cancelled VARCHAR(255)
+ 	staff_appointment_reminder TIMESTAMP,
+ 	staff_reminder_time VARCHAR(255)
  )
 
-CREATE TABLE IF NOT EXISTS  company_notification (
+CREATE TABLE IF NOT EXISTS  company_config (
   	id serial UNIQUE PRIMARY KEY,
+  	advance_notice VARCHAR(100),
+  	scheduling_window VARCHAR(100),
+  	slot_window VARCHAR(100),
+  	price_display BOOLEAN,
+  	duration_display BOOLEAN,
+  	working_hour_display BOOLEAN,
+  	staff_option BOOLEAN,
+  	notes TEXT,
+  	last_update_time TIMESTAMP,
+  	term_condition_title VARCHAR(255),
+  	term_condition_url VARCHAR(255),
+  	callback_title VARCHAR(255),
+  	callback_url VARCHAR(255)
 )
-
-
-
 
 
 CREATE TABLE IF NOT EXISTS  services (
@@ -56,7 +76,6 @@ CREATE TABLE IF NOT EXISTS packages (
    	last_update_time TIMESTAMP,
    	created_time TIMESTAMP NOT NULL
 );
-
 
 
 CREATE TABLE IF NOT EXISTS services_packages (
