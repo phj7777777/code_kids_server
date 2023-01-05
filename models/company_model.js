@@ -6,6 +6,7 @@ module.exports.createCompanyQuery = async (company) => {
   const {
     organization_name,
     description,
+    industry,
     email,
     booking_policy,
     address,
@@ -17,8 +18,8 @@ module.exports.createCompanyQuery = async (company) => {
   } = company;
 
   return await db.query(
-    'INSERT INTO companies (organization_name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, last_update_time, created_time) VALUES ($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11, $11)',
-    [organization_name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, currentTime],
+    'INSERT INTO companies (organization_name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, last_update_time, created_time, industry) VALUES ($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11, $11,$12) RETURNING id',
+    [organization_name, description, email, booking_policy, address, country, phone_number, country_code, profile_image, url, currentTime, industry],
   );
 
 
@@ -57,13 +58,27 @@ module.exports.updateCompanyQuery = async (id, company) => {
 
 
 module.exports.deleteCompanyQuery = async (id) => {
-    return await db.query(
+  return await db.query(
     'DELETE FROM companies WHERE id = $1',
     [id],
   );
 
 };
 
+module.exports.createCompanyStaffQuery = async (staffId, companyId) => {
+
+  return await db.query(
+    'INSERT INTO companies_staffs (staff_id, company_id) VALUES ($1,$2) RETURNING *',
+    [staffId, companyId],
+  );
+};
 
 
 
+module.exports.getStaffCompanyByIdQuery = async (id) => {
+  return await db.query(
+    'SELECT * FROM companies_staffs WHERE staff_id = $1',
+    [id],
+  );
+
+};

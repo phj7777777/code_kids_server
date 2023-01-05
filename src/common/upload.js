@@ -22,18 +22,20 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
-
 // this is just to test locally if multer is working fine.
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'k');
+    console.log(req)
+    cb(null, 'images');
   },
   filename: (req, file, cb) => {
-
+console.log('fdd')
+    console.log(file)
     cb(null, `image-${Date.now()}` + path.extname(file.originalname))
     //path.extname get the uploaded file extension
   }
 })
+
 
 const multerS3Config = multerS3({
   s3: s3Config,
@@ -48,22 +50,11 @@ const multerS3Config = multerS3({
 });
 
 const upload = multer({
-
-  storage: multerS3Config,
+  storage: storage,
   fileFilter: fileFilter,
   limits: {
     fileSize: 1024 * 1024 * 5 // we are allowing only 5 MB files
   }
 })
-
-
-module.exports.getImage = (key)=>{
-  s3Config.getObject({ Bucket: process.env.AWS_BUCKET_NAME, Key: key }, function(err, data)
-  {
-    if (!err)
-      console.log(data.Body.toString());
-  });
-}
-
 
 exports.profileImage = upload;

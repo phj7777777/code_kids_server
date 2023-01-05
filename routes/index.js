@@ -12,12 +12,15 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('../swagger.json');
 const validateAuth = require('../middlewares/validateAuth');
 const getData = require('../middlewares/getData');
+const express = require('express');
 
 
 module.exports = (app) => {
 
 
   //app.use(`${API_PREFIX}//users`, validateAuth.checkIfAuthenticated, getData.getGeoip, users);
+
+  app.use(express.static('images'));
   app.use(`${API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(`${API_PREFIX}/status`, validateAuth.checkIfAuthenticated, getData.getGeoip, status);
   app.use(`${API_PREFIX}/image`, validateAuth.checkIfAuthenticated, getData.getGeoip, image);

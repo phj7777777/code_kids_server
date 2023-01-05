@@ -5,8 +5,8 @@ const cors = require('cors');
 
 const app = express();
 
-app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json({limit: '50mb'}));
 
 app.options('*', cors());
 
@@ -35,6 +35,8 @@ app.use((req, res, next) => {
   // Pass to next layer of middleware
   next();
 });
+
+
 
 require('./routes')(app);
 
