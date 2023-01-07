@@ -1,6 +1,10 @@
 const db = require('../services/database');
+const { createCompanyConfigQuery } = require('./company_config_model');
+const { createCompanyNotificationQuery } = require('./company_notification_model');
+const { createStaffQuery } = require('./staff_model');
+const { createStaff } = require('../src/staffs/controller');
 
-module.exports.createCompanyQuery = async (company) => {
+async function createCompanyQuery(company) {
 
   const currentTime = new Date();
   const {
@@ -65,7 +69,7 @@ module.exports.deleteCompanyQuery = async (id) => {
 
 };
 
-module.exports.createCompanyStaffQuery = async (staffId, companyId) => {
+async function createCompanyStaffQuery(staffId, companyId){
 
   return await db.query(
     'INSERT INTO companies_staffs (staff_id, company_id) VALUES ($1,$2) RETURNING *',
@@ -74,11 +78,41 @@ module.exports.createCompanyStaffQuery = async (staffId, companyId) => {
 };
 
 
-
 module.exports.getStaffCompanyByIdQuery = async (id) => {
   return await db.query(
     'SELECT * FROM companies_staffs WHERE staff_id = $1',
     [id],
   );
+
+};
+
+
+/*
+  1. Create company in companies table using staff_id
+  2. Create first staff
+  3. Create company notification with default value
+  4. Create company working hour (set default value if working hour is null)
+  5. Create company config with default value
+*/
+
+module.exports.initCompanyQuery = async (company) => {
+
+  try {
+    await db.query('BEGIN');
+    const response = await createCompanyQuery(company);
+    const inserted = response.rows[0];
+    const res = await createCompanyStaffQuery(company.staff_id, inserted.id);
+    //await createCompanyQuery(company);
+    //await createStaffQuery(staff);
+    // await createCompanyNotificationQuery(company);
+    // await createCompanyConfigQuery(company);
+    await db.query('COMMIT')
+  } catch (e) {
+    await db.query('ROLLBACK')
+    throw e
+  } finally {
+    db.release()
+    return {}
+  }
 
 };

@@ -30,13 +30,12 @@ const storage = multer.diskStorage({
     cb(null, 'images');
   },
   filename: (req, file, cb) => {
-console.log('fdd')
+
     console.log(file)
     cb(null, `image-${Date.now()}` + path.extname(file.originalname))
     //path.extname get the uploaded file extension
   }
 })
-
 
 const multerS3Config = multerS3({
   s3: s3Config,

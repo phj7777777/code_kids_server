@@ -1,4 +1,5 @@
 const db = require('../../../services/database');
+const { initCompanyQuery } = require('../../../models/company_model');
 const { ERROR_PARAM, SUCCESS, ERROR_SERVER, ERROR_EMPTY } = require('../../../const');
 const {
   createCompanyQuery,
@@ -15,26 +16,30 @@ module.exports.createCompany = async (company) => {
       return { result: ERROR_PARAM, message: '' };
     }
 
-    //Need to refactor to use SQL transaction
-    const response = await createCompanyQuery(company);
+    const response = await initCompanyQuery(company, '')
 
-    if (!response.rows[0]) {
-      return { result: ERROR_SERVER, message: '' };
-    }
 
-    const inserted = response.rows[0];
-
-    if (response?.rowCount == 1) {
-      const res = await createCompanyStaffQuery(company.staff_id, inserted.id);
-      if (!res.rows[0]) {
-        return { result: ERROR_SERVER, message: '' };
-      }
-
-    } else {
-      return { result: ERROR_SERVER, message: '' };
-    }
-
-    return { result: SUCCESS, message: inserted };
+    //
+    // //Need to refactor to use SQL transaction
+    // const response = await createCompanyQuery(company);
+    //
+    // if (!response.rows[0]) {
+    //   return { result: ERROR_SERVER, message: '' };
+    // }
+    //
+    // const inserted = response.rows[0];
+    //
+    // if (response?.rowCount == 1) {
+    //   const res = await createCompanyStaffQuery(company.staff_id, inserted.id);
+    //   if (!res.rows[0]) {
+    //     return { result: ERROR_SERVER, message: '' };
+    //   }
+    //
+    // } else {
+    //   return { result: ERROR_SERVER, message: '' };
+    // }
+    //
+    return { result: SUCCESS, message: response };
   } catch (e) {
     return { result: ERROR_SERVER, message: e.message };
   }

@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL
+  connectionString: process.env.DATABASE_URL,
 });
 
 pool.on('connect', () => {
@@ -13,4 +13,5 @@ pool.on('connect', () => {
 
 module.exports = {
   query: (text, params) => pool.query(text, params),
+  release: () => pool.release(),
 };
