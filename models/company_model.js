@@ -3,6 +3,7 @@ const { createCompanyConfigQuery } = require('./company_config_model');
 const { createCompanyNotificationQuery } = require('./company_notification_model');
 const { createStaffQuery } = require('./staff_model');
 const { createStaff } = require('../src/staffs/controller');
+const { defaultNotification, defaultConfig } = require('../const');
 
 async function createCompanyQuery(company) {
 
@@ -97,22 +98,21 @@ module.exports.getStaffCompanyByIdQuery = async (id) => {
 
 module.exports.initCompanyQuery = async (company) => {
 
+
   try {
     await db.query('BEGIN');
     const response = await createCompanyQuery(company);
     const inserted = response.rows[0];
+    console.log(inserted)
     const res = await createCompanyStaffQuery(company.staff_id, inserted.id);
-    //await createCompanyQuery(company);
-    //await createStaffQuery(staff);
-    // await createCompanyNotificationQuery(company);
-    // await createCompanyConfigQuery(company);
+    await createCompanyNotificationQuery(defaultNotification, inserted.id);
+    await createCompanyConfigQuery(defaultConfig, inserted.id);
+
     await db.query('COMMIT')
+    return inserted.id
   } catch (e) {
     await db.query('ROLLBACK')
     throw e
-  } finally {
-    db.release()
-    return {}
   }
 
 };

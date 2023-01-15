@@ -11,8 +11,9 @@ const {
 
 module.exports.createCompany = async (company) => {
 
+  console.log(company)
   try {
-    if (!company?.organization_name || !company.email || !company.staff_id) {
+    if (!company?.organization_name || !company.email) {
       return { result: ERROR_PARAM, message: '' };
     }
 

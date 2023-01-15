@@ -1,6 +1,6 @@
 const db = require('../services/database');
 
-module.exports.createCompanyNotificationQuery = async (company) => {
+module.exports.createCompanyNotificationQuery = async (company, company_id) => {
 
   const currentTime = new Date();
   const {
@@ -17,8 +17,8 @@ module.exports.createCompanyNotificationQuery = async (company) => {
   } = company;
 
   return await db.query(
-    'INSERT INTO company_notification (customer_book_success, customer_book_updated, customer_book_cancelled, customer_appointment_reminder, customer_reminder_time, staff_book_success, staff_book_updated, staff_book_cancelled, staff_appointment_reminder, staff_reminder_time,last_update_time) VALUES ($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11) RETURNING id',
-    [customer_book_success, customer_book_updated, customer_book_cancelled, customer_appointment_reminder, customer_reminder_time, staff_book_success, staff_book_updated, staff_book_cancelled, staff_appointment_reminder,  staff_reminder_time, currentTime],
+    'INSERT INTO company_notification (company_id, customer_book_success, customer_book_updated, customer_book_cancelled, customer_appointment_reminder, customer_reminder_time, staff_book_success, staff_book_updated, staff_book_cancelled, staff_appointment_reminder, staff_reminder_time,last_update_time) VALUES ($1, $2, $3, $4,$5, $6, $7, $8,$9, $10, $11, $12) RETURNING company_id',
+    [company_id, customer_book_success, customer_book_updated, customer_book_cancelled, customer_appointment_reminder, customer_reminder_time, staff_book_success, staff_book_updated, staff_book_cancelled, staff_appointment_reminder,  staff_reminder_time, currentTime],
   );
 
 

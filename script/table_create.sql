@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS  companies (
  );
 
 CREATE TABLE IF NOT EXISTS  company_notification (
- 	id serial UNIQUE PRIMARY KEY,
+  	company_id INTEGER PRIMARY KEY,
  	customer_book_success VARCHAR(255),
  	customer_book_updated VARCHAR(255),
  	customer_book_cancelled VARCHAR(255),
@@ -30,17 +30,23 @@ CREATE TABLE IF NOT EXISTS  company_notification (
  	staff_book_success VARCHAR(20),
  	staff_book_updated VARCHAR(4),
  	staff_book_cancelled VARCHAR(255),
- 	staff_appointment_reminder TIMESTAMP,
+ 	staff_appointment_reminder VARCHAR(50),
  	staff_reminder_time VARCHAR(255),
  	last_update_time TIMESTAMP
  );
 
 
 CREATE TABLE IF NOT EXISTS  company_config (
-  	id serial UNIQUE PRIMARY KEY,
-  	advance_notice VARCHAR(100),
-  	scheduling_window VARCHAR(100),
-  	slot_window VARCHAR(100),
+  	company_id INTEGER PRIMARY KEY,
+  	cancellation_policy_cancel: integer,
+  	appointment_advance_notice_day integer,
+  	appointment_advance_notice_hour integer,
+  	appointment_advance_notice_min integer,
+  	scheduling_window_month integer,
+  	cancellation_policy_cancel integer,
+  	scheduling_window_day integer,
+  	slot_window_hour integer,
+  	slot_window_min integer,
   	price_display BOOLEAN,
   	duration_display BOOLEAN,
   	working_hour_display BOOLEAN,

@@ -28,6 +28,7 @@ module.exports.getCompanyConfig = async (id) => {
     }
     const response = await getCompanyConfigQuery(id);
     if (response?.rows && response?.rows.length > 0) {
+      console.log(response.rows[0])
       return { result: SUCCESS, data: response.rows[0] };
     } else {
       return { result: ERROR_EMPTY, data: {} };
@@ -39,16 +40,16 @@ module.exports.getCompanyConfig = async (id) => {
 };
 
 
-module.exports.updateCompanyConfig = async (id, company) => {
+module.exports.updateCompanyConfig = async (company) => {
 
+  const id = company?.company_id;
+
+  console.log(id)
   try {
     if (!id) {
       return { result: ERROR_PARAM, message: company };
     }
-    if (!company?.organization_name || !company.email) {
-      return { result: ERROR_PARAM, message: company };
-    }
-    const response = await updateCompanyConfigQuery(company);
+    const response = await updateCompanyConfigQuery(id, company);
     return { result: SUCCESS, message: response };
   } catch (e) {
     return { result: ERROR_SERVER, message: e.message };

@@ -21,8 +21,7 @@ router.get('/:id', async (req, res) => {
 
 
 router.put('/:id', async (req, res) => {
-  const id = req.params.id;
-  const result = await controller.updateCompanyConfig(id, req.body);
+  const result = await controller.updateCompanyConfig(req.body);
   if (result) return res.json(result);
   return res.status(400).json({ result: ERROR_SERVER });
 });
