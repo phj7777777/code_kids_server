@@ -19,6 +19,3 @@
 
 -- SELECT Count(*) FROM customers
 
-
-My Name is Pang hAO JIE
-My name is Pang Hao Jie

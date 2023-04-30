@@ -1,16 +1,16 @@
-const { Pool } = require('pg');
-const dotenv = require('dotenv');
+const mongoose = require('mongoose');
 
-dotenv.config();
+const config = require('../config');
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-});
+const dbUrl = config.dbUrlMongoDB;
 
-pool.on('connect', () => {
-  console.log('Connect to database successfully');
-});
+mongoose.connect(
+  dbUrl,
+  { useNewUrlParser: true, useUnifiedTopology: true }, // To avoid deprecated options
+  (err) => {
+    if (err) console.log('Error', err);
+    else console.log('Mongodb connected');
+  },
+);
 
-module.exports = {
-  query: (text, params) => pool.query(text, params),
-};
+module.exports = mongoose;

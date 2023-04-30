@@ -27,7 +27,7 @@ module.exports.createCustomerQuery = async (customer) => {
 
 module.exports.getAllCustomerQuery = async () => {
 
-  return await db.query('SELECT * FROM customers');
+  return await ToyCar.findById(req.params.id);
 
 };
 

@@ -28,7 +28,6 @@ module.exports.getCompanyConfig = async (id) => {
     }
     const response = await getCompanyConfigQuery(id);
     if (response?.rows && response?.rows.length > 0) {
-      console.log(response.rows[0])
       return { result: SUCCESS, data: response.rows[0] };
     } else {
       return { result: ERROR_EMPTY, data: {} };

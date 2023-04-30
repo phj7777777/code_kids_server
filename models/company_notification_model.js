@@ -26,7 +26,7 @@ module.exports.createCompanyNotificationQuery = async (company, company_id) => {
 
 module.exports.getCompanyNotificationQuery = async (id) => {
   return await db.query(
-    'SELECT * FROM company_notification WHERE id = $1 LIMIT 1',
+    'SELECT * FROM company_notification WHERE company_id = $1 LIMIT 1',
     [id],
   );
 };

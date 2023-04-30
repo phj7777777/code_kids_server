@@ -1,4 +1,5 @@
 const status = require('../src/health/routes');
+const blog = require('../src/blogs/routes');
 const message = require('../src/messenger/routes');
 const company = require('../src/companies/routes');
 const companyNotification = require('../src/company_notification/routes');
@@ -25,6 +26,7 @@ module.exports = (app) => {
   app.use(express.static('images'));
   app.use(`${API_PREFIX}/api-docs`, swaggerUi.serve, swaggerUi.setup(swaggerDocument));
   app.use(`${API_PREFIX}/status`, validateAuth.checkIfAuthenticated, getData.getGeoip, status);
+  app.use(`${API_PREFIX}/blogs`, validateAuth.checkIfAuthenticated, getData.getGeoip, blog);
   app.use(`${API_PREFIX}/image`, validateAuth.checkIfAuthenticated, getData.getGeoip, image);
   app.use(`${API_PREFIX}/message`, validateAuth.checkIfAuthenticated, getData.getGeoip, message);
   app.use(`${API_PREFIX}/company`, validateAuth.checkIfAuthenticated, getData.getGeoip, company);
